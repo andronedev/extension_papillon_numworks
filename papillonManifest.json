@@ -3,14 +3,14 @@
 	"author": "andronedev",
 	"authorDisplayName": "Papillon",
 	"description": "La calculatrice Numworks",
-	"icon": "omega",
+	"icon": "calculate",
     "version": "1.0.0",
 	"javascript": [],
 	"css": [],
 	"tabs": [
 		{
 		"name": "Numworks",
-		"icon": "omega",
+		"icon": "calculate",
 		"path": "dev.androne.omega",
 		"html": "omega.html"
 		}
