@@ -12,7 +12,7 @@
 		"name": "Numworks",
 		"icon": "calculate",
 		"path": "dev.androne.omega",
-		"html": "omega/simulator.html"
+		"html": "simulator.html"
 		}
 	]
 }
