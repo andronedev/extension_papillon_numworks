@@ -1,8 +1,14 @@
 FROM ubuntu:latest
 
-RUN apt-get update && \
-    apt-get install -y git python3 build-essential cmake nodejs npm && \
-    ln -s /usr/bin/python3 /usr/bin/python
+
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y python3
+RUN apt-get install -y build-essential
+RUN apt-get install -y cmake
+RUN apt-get install -y nodejs npm
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install emsdk
 RUN git clone https://github.com/emscripten-core/emsdk.git && \
