@@ -6,6 +6,7 @@
 	"icon": "money",
     "version": "1.0.1",
 	"css": [],
+	"javascript": [],
 	"tabs": [
 		{
 		"name": "Wallet",
