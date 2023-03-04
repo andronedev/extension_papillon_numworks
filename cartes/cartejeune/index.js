@@ -140,7 +140,7 @@ class CarteJeune {
     getSvgCardFace() {
         const self = this;
         return new Promise((resolve, reject) => {
-            fetch("cartes/cartejeune/cartejeunev1_face.svg").then(response => response.text()).then(svg => {
+            fetch("https://raw.githubusercontent.com/andronedev/extension_papillon_wallet/master/cartes/cartejeune/cartejeunev1_face.svg").then(response => response.text()).then(svg => {
 
                 // replace el_nom, el_prenom, el_etab, el_num_top, el_code
                 // example of svg :
@@ -190,7 +190,7 @@ class CarteJeune {
     getSvgCardBack() {
         const self = this;
         return new Promise((resolve, reject) => {
-            fetch("cartes/cartejeune/cartejeunev1_back.svg").then(response => response.text()).then(svg => { // replace el_annee_haut, el_annee_bas
+            fetch("https://raw.githubusercontent.com/andronedev/extension_papillon_wallet/master/cartes/cartejeune/cartejeunev1_back.svg").then(response => response.text()).then(svg => { // replace el_annee_haut, el_annee_bas
 
                 let svgelement = new DOMParser().parseFromString(svg, "text/xml");
                 // remove all outside the svg tag
@@ -212,7 +212,7 @@ class CarteJeune {
     getSvgPreview() {
         const self = this;
         return new Promise((resolve, reject) => {
-            fetch("cartes/cartejeune/cartejeunev1_preview.svg").then(response => response.text()).then(svg => { // replace el_nom, el_prenom, el_etab, el_num_top, el_code
+            fetch("https://raw.githubusercontent.com/andronedev/extension_papillon_wallet/master/cartes/cartejeune/cartejeunev1_preview.svg").then(response => response.text()).then(svg => { // replace el_nom, el_prenom, el_etab, el_num_top, el_code
                 resolve(svg);
             });
         });
