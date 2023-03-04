@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="./cartes/cartejeune/index.js"></script>
+    <script src="wallet.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: sans-serif;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: left;
+            margin: 0;
+            background-color: #c1c1c1;
+            color: #000;
+            padding: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .card-list, .card-available {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 320px;
+            height: 200px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card svg {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+        }
+        .card-list .card svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-list .card h3 {
+            margin: 10px 0;
+        }
+
+        .add-card {
+            width: 320px;
+            height: 200px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 0;
+        }
+
+        .add-card:hover {
+            color: #000;
+        }
+
+        .add-card h3 {
+            margin: 0;
+            z-index: 2;
+            position: relative;
+
+        }
+
+        .add-card .bg {
+            width: 320px;
+            height: 200px;
+            position: absolute;
+
+            -moz-backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+
+            background-color: rgba(182, 182, 182, 0.3);
+            border-radius: 10px;
+            z-index: 1;
+
+        }
+
+        .card-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            border-radius: 0;
+            transform: none;
+            transition: all 0.3s;
+            margin: 0;
+
+        }
+
+        .card-fullscreen:hover {
+            transform: none;
+        }
+      
+        /* popup */
+        .popup {
+
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup form {
+            /*
+            form.style.width = '500px'
+            form.style.height = '500px'
+            form.style.backgroundColor = 'white'
+            form.style.borderRadius = '10px'
+            form.style.display = 'flex'
+            form.style.flexDirection = 'column'
+            form.style.alignItems = 'center'
+            form.style.padding = '20px'
+            form.style.boxShadow = '0px 0px 10px #ccc'
+            */
+            width: 100vw;
+            height: 100vh;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+
+        }
+        .popup form h2 {
+            margin: 0;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+      .popup form input {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 0 10px;
+            font-size: 16px;
+        }
+
+        .popup form input:focus {
+            outline: none;
+            border-bottom: 1px solid #000;
+        }
+
+        .popup form button {
+            width: 100%;
+            height: 40px;
+            border: none;
+            background-color: #000;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .popup form button:hover {
+            background-color: #333;
+        }
+
+        .popup form button:active {
+            background-color: #000;
+        }
+
+        .popup form button:focus {
+            outline: none;
+        }
+
+        .popup form button[type="submit"] {
+            background-color: #000;
+        }
+        .popup form button[type="submit"]:hover {
+            background-color: #333;
+        }
+        .popup form button[type="submit"]:active {
+            background-color: #000;
+        }
+
+        .popup form button[type="reset"] {
+            background-color: red;
+        }
+        .popup form input:disabled {
+            background-color: #ccc;
+        }
+
+
+        .popup form input[type="file"] {
+            display: none;
+        }
+        /*.photo-button & .photo-preview for photo upload*/
+        .popup form .photo-preview { /* image preview */
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            margin: 20px;
+
+        }
+        .popup form.input-button { /* make use all width available */
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            margin-bottom: 10px
+
+        }
+        .popup form label {
+            width: 100%;
+            text-align: start;
+            padding: 0 10px;
+            font-size: 16px;
+    
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Mes cartes</h1>
+
+        <div class="card-list"></div>
+
+        <h1>Cartes disponibles</h1>
+
+
+        <div class="card-available"></div>
+    </div>
+
+    <script>
+        wallet = new Wallet();
+
+        let config = wallet.getConfiguredCards()
+        console.table(config)
+        let cardList = document.querySelector('.card-list')
+        for (let card of config) {
+            let cardEl = document.createElement('div')
+            cardEl.classList.add('card')
+            // set svg in cardEl
+            cardList.appendChild(cardEl)
+            console.log("card" + JSON.stringify(card))
+            card.getSvgCardFace().then(svg => {
+                // resize svg
+                svg = svg.replace(/width="(\d+)"/, 'width="300"')
+                svg = svg.replace(/height="(\d+)"/, 'height="200"')
+
+                cardEl.innerHTML = svg
+
+
+            })
+
+        }
+
+        let cardAvailable = document.querySelector('.card-available')
+        // add card.getSvgPreview() of wallet.getAvailableCards()
+        // set image as background of cardAvailable
+
+        for (let card of wallet.getAvailableCards()) {
+
+            let cardEl = document.createElement('div')
+            cardEl.classList.add('add-card')
+            cardEl.classList.add('card')
+            let h3 = document.createElement('h3')
+            h3.innerText = card.getManifest().name
+            cardEl.appendChild(h3)
+            cardAvailable.appendChild(cardEl)
+            // convert card.getSvgPreview() to base64
+            // set image as background of cardEl
+
+            card.getSvgPreview().then(svg => {
+                // resize svg
+                svg = svg.replace(/width="(\d+)"/, 'width="300"')
+                svg = svg.replace(/height="(\d+)"/, 'height="200"')
+
+                let b64 = btoa(svg)
+                let bg = document.createElement('div')
+                bg.classList.add('bg')
+                cardEl.style.backgroundImage = `url(data:image/svg+xml;base64,${b64})`
+                cardEl.style.backgroundSize = 'cover'
+
+                cardEl.appendChild(bg)
+
+
+
+            })
+
+            cardEl.addEventListener('click', () => {
+
+                console.log('click')
+                askToAddCard(card)
+            })
+
+
+
+        }
+
+        function askToAddCard(card) {
+            let manifest = card.getManifest()
+            let popup = document.createElement('div')
+            popup.classList.add('popup')
+  
+
+            let form = document.createElement('form')
+
+            let h2 = document.createElement('h2')
+            h2.innerText = manifest.name
+            form.appendChild(h2)
+
+            let inputs = []
+
+            for (let inputName in manifest.inputs) {
+                let input = manifest.inputs[inputName]
+                let div = document.createElement('div')
+                div.style.display = 'flex'
+                div.style.flexDirection = 'column'
+                let label = document.createElement('label')
+                label.innerText = input.label
+                div.appendChild(label)
+                switch (input.type) {
+                    case 'text':
+                        let inputEl = document.createElement('input')
+                        inputEl.type = 'text'
+                        inputEl.maxLength = input.maxlength
+                        inputEl.required = input.required
+                        div.appendChild(inputEl)
+                        inputs.push({
+                            name: inputName,
+                            el: inputEl
+                        })
+                        break
+                    case 'photo':
+                        let inputPhoto = document.createElement('input')
+                        inputPhoto.type = 'file'
+                        inputPhoto.accept = 'image/*'
+                        // only one photo
+                        inputPhoto.multiple = false
+                        inputPhoto.required = input.required
+                        div.appendChild(inputPhoto)
+                        // append better button for file input
+                        let button = document.createElement('button')
+                        button.classList.add('input-button')
+                        button.innerText = "Choisir une photo"
+                        button.type = "button"
+                        button.addEventListener('click', e => {
+                            inputPhoto.click()
+                        })
+                        div.appendChild(button)
+                        inputs.push({
+                            name: inputName,
+                            el: inputPhoto
+                        })
+                        break
+                }
+                form.appendChild(div)
+            }
+
+            let button = document.createElement('button')
+            button.innerText = "Ajouter"
+            button.type = "submit"
+
+            // reset form button
+            let reset = document.createElement('button')
+            reset.innerText = "Annuler"
+            reset.type = "reset"
+            reset.addEventListener('click', e => {
+                popup.parentNode.removeChild(popup)
+            })
+
+
+            form.appendChild(button)
+            form.appendChild(reset)
+
+            popup.appendChild(form)
+            document.body.appendChild(popup)
+
+            // add reader for file input
+
+            let b64 = []
+            for (let input of inputs) {
+                if (input.el.type === 'file') {
+                    input.el.addEventListener('change', e => {
+                        let reader = new FileReader()
+                        reader.onload = function (e) {
+                            b64[input.name] = e.target.result
+                            // show preview
+                            // remove previous preview
+                            let previews = document.querySelectorAll('.photo-preview')
+                            for (let preview of previews) {
+                                preview.parentNode.removeChild(preview)
+                            }
+                            let img = document.createElement('img')
+                            img.classList.add('photo-preview')
+                            img.src = e.target.result
+                            img.style.width = '100px'
+                            img.style.height = '100px'
+                            img.style.borderRadius = '10px'
+                            img.style.objectFit = 'cover'
+                            input.el.parentNode.appendChild(img)
+
+                        }
+                        reader.readAsDataURL(input.el.files[0])
+                    })
+                }
+            }
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                let data = {}
+                for (let input of inputs) {
+                    if (input.el.type === 'file') {
+                        data[input.name] = b64[input.name]
+                    } else {
+                        data[input.name] = input.el.value
+                    }
+                }
+
+                console.log(data)
+
+                // duplicate card 
+                let newCard = card.newCard()
+                newCard.setCard(data)
+                console.log(newCard)
+                wallet.addNewCard(newCard)
+                //window.location.reload()
+
+            })
+
+        }
+    </script>
+
+    <script>
+ 
+        // on click on (configured) card, show card in full screen
+        
+        let cards = document.querySelectorAll('.card-list .card')
+        for (let card of cards) {
+            card.addEventListener('click', () => {
+                let cardEl = document.createElement('div')
+                cardEl.classList.add('card')
+                cardEl.classList.add('card-fullscreen')
+                // change the size of the svg
+                cardEl.innerHTML = card.innerHTML
+                cardEl.innerHTML = cardEl.innerHTML.replace(/width="(\d+)"/, 'width="100%"')
+                cardEl.innerHTML = cardEl.innerHTML.replace(/height="(\d+)"/, 'height="100%"')
+                document.body.appendChild(cardEl)
+                cardEl.addEventListener('click', () => {
+                    cardEl.remove()
+                })
+            })
+        }
+
+
+
+    </script>
+</body>
+
+</html>

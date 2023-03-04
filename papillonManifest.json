@@ -1,18 +1,18 @@
 {
-	"name": "Numworks",
+	"name": "Wallet",
 	"author": "andronedev",
 	"authorDisplayName": "Papillon",
-	"description": "La calculatrice Numworks",
-	"icon": "calculate",
+	"description": "Votre portefeuille virtuel",
+	"icon": "money",
     "version": "1.0.1",
 	"javascript": [],
 	"css": [],
 	"tabs": [
 		{
-		"name": "Numworks",
-		"icon": "calculate",
-		"path": "dev.androne.omega",
-		"html": "simulator.html"
+		"name": "Wallet",
+		"icon": "wallet",
+		"path": "dev.androne.wallet",
+		"html": "index.html"
 		}
 	]
 }
