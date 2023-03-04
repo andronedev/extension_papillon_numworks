@@ -5,7 +5,10 @@
 	"description": "Votre portefeuille virtuel",
 	"icon": "money",
     "version": "1.0.1",
-	"javascript": [],
+	"javascript": [
+		"cartes/cartejeune/index.js",
+		"wallet.js"
+	],
 	"css": [],
 	"tabs": [
 		{
